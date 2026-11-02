@@ -1,0 +1,11 @@
+# Quick Girls - pubblicazione gratuita su Render.
+# Il database SQLite locale e' TEMPORANEO: viene cancellato a ogni
+# sospensione, riavvio o nuovo deploy dell'istanza Free.
+services:
+  - type: web
+    name: quick-girls
+    runtime: node
+    plan: free
+    buildCommand: node --version
+    startCommand: npm start
+    healthCheckPath: /health

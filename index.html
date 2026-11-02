@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7656ea">
+  <meta name="description" content="Quick Girls: il party game online con carte-lettera, argomenti e amiche. Stanze private per 3–6 giocatrici.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/style.css">
+  <title>Quick Girls ⚡ — La tua serata giochi</title>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+<div class="background-orb orb-a"></div><div class="background-orb orb-b"></div><div class="background-orb orb-c"></div>
+<div class="page">
+  <header class="site-header">
+    <div class="brand"><span class="brand-icon">⚡</span><span>quick<span class="brand-girls">girls</span><span class="brand-dot">.</span></span></div>
+    <div class="header-right"><span id="connection" class="connection" role="status"><span class="connection-dot"></span>Connessione...</span><button id="helpBtn" class="icon-btn" type="button" aria-label="Come si gioca">?</button></div>
+  </header>
+
+  <main>
+    <section id="welcome" class="welcome-grid">
+      <div class="welcome-copy">
+        <span class="eyebrow">💗 IL PARTY GAME DELLE AMICHE</span>
+        <h1>Una lettera.<br><span class="gradient-text">Una risposta.</span><br>Un sacco di risate.</h1>
+        <p class="lead">Da 3 a 6 amiche online. Ognuna ha 5 carte: trova una parola che inizi con la tua lettera e scartala prima delle altre!</p>
+        <div class="feature-pills"><span>✨ Stanze private</span><span>💬 Scritto o a voce</span><span>🏆 Classifica live</span></div>
+        <div class="decorative-stack" aria-hidden="true"><div class="fake-card fc-1">G</div><div class="fake-card fc-2">S</div><div class="fake-card fc-3">M</div><span class="fake-sparkle">✦</span></div>
+      </div>
+      <div class="entry-card card">
+        <div class="entry-heading"><div class="entry-emoji">🎉</div><div><h2>Pronte a giocare?</h2><p>Crea una stanza o unisciti alle altre!</p></div></div>
+        <label for="nickname">COME TI CHIAMI?</label>
+        <input id="nickname" type="text" maxlength="20" autocomplete="nickname" placeholder="Il tuo nickname ✨" required>
+        <button id="createBtn" class="btn btn-primary btn-wide" type="button">✨ Crea una stanza <span>→</span></button>
+        <div class="separator"><span>oppure entra nella partita</span></div>
+        <label for="joinCode">CODICE DELLA STANZA</label>
+        <input id="joinCode" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Es. K7DJ9P" aria-label="Codice stanza di sei caratteri">
+        <button id="joinBtn" class="btn btn-outline btn-wide" type="button">🚀 Entra con il codice</button>
+        <div class="entry-foot">🔐 Solo chi ha il codice o il link può entrare nella stanza.</div>
+      </div>
+    </section>
+
+    <section id="game" hidden>
+      <div class="room-banner">
+        <div class="room-title"><span class="room-label">LA VOSTRA STANZA</span><div class="room-code-row"><strong id="roomCode">------</strong><span id="roomPhase" class="room-phase">LOBBY</span></div></div>
+        <div class="room-actions"><button id="shareBtn" class="btn btn-white" type="button">🔗 Condividi</button><button id="leaveBtn" class="btn btn-ghost" type="button">Esci</button></div>
+      </div>
+      <div id="connectionWarning" class="warning" hidden>📡 Connessione persa. Ti ricolleghiamo automaticamente; non chiudere la scheda.</div>
+      <div id="offlineWarning" class="warning" hidden></div>
+
+      <div id="lobby" class="two-columns">
+        <section class="card">
+          <div class="section-title"><div><span class="eyebrow">LA SQUADRA</span><h2>Le giocatrici <span class="title-emoji">👭</span></h2></div><span id="playerCount" class="chip chip-purple">0/6</span></div>
+          <div id="lobbyPlayers" class="players-list"></div>
+          <p id="readyMessage" class="helper">Invita almeno altre 2 amiche con il link qui sopra.</p>
+          <div id="hostSetup" hidden>
+            <div class="soft-divider"></div>
+            <h3>⚙️ Impostazioni della partita</h3>
+            <label>COME RISPONDETE?</label>
+            <div class="option-row"><button id="modeWritten" class="option-btn" type="button">⌨️ Scritto<span>Digitando le parole</span></button><button id="modeVoice" class="option-btn" type="button">🎤 A voce<span>Con microfono o chiamata</span></button></div>
+            <label>QUALI ARGOMENTI?</label>
+            <div class="option-row topic-options"><button data-pack="mixed" class="option-btn" type="button">🌈 Mix</button><button data-pack="classic" class="option-btn" type="button">🧠 Classici</button><button data-pack="girls" class="option-btn" type="button">💅 Girls</button></div>
+            <button id="startBtn" class="btn btn-primary btn-wide" type="button">⚡ Iniziamo!</button>
+            <p class="tiny center">Partita avviabile con 3–6 giocatrici tutte online.</p>
+          </div>
+          <p id="guestWaiting" class="soft-note" hidden>💜 La host sta preparando la partita. Tu sei pronta!</p>
+        </section>
+        <aside class="side-stack">
+          <section class="card rules-card"><span class="eyebrow">IN 20 SECONDI</span><h2>Come si gioca? 🎲</h2><div class="rule"><span>1</span><p>Ricevi <strong>5 carte-lettera</strong> segrete.</p></div><div class="rule"><span>2</span><p>Leggi il <strong>tema comune</strong> e proponi una parola che inizi con una tua lettera.</p></div><div class="rule"><span>3</span><p>La host approva la risposta: <strong>scarti la carta</strong>. Dopo 3 parole, nuovo tema!</p></div><div class="rule"><span>4</span><p>Chi scarta tutte le carte <strong>vince la manche</strong>.</p></div></section>
+          <section class="card" id="customTopicsCard"><span class="eyebrow">PERSONALIZZATE</span><h3>🪄 I vostri argomenti</h3><p class="helper">Aggiungete temi tutti vostri, oltre agli argomenti del gioco.</p><div id="topicEditor" hidden><div class="input-action"><input id="customTopicInput" maxlength="100" placeholder="Es. Scuse per non uscire..." aria-label="Nuovo argomento"><button id="addTopicBtn" class="btn btn-small" type="button">Aggiungi</button></div></div><div id="customTopics" class="topic-tags"></div></section>
+        </aside>
+      </div>
+
+      <div id="playArea" class="play-grid" hidden>
+        <div class="main-stack">
+          <section class="topic-card card">
+            <div class="topic-top"><span class="eyebrow">💭 ARGOMENTO DEL MOMENTO</span><span id="roundTag" class="round-tag">MANCHE 1</span></div>
+            <h1 id="topicText">—</h1>
+            <div class="progress-head"><strong id="progressLabel">0 di 3 risposte</strong><span>poi cambia!</span></div>
+            <div class="three-progress" id="topicProgress" aria-label="Risposte approvate su 3"><div></div><div></div><div></div></div>
+            <div id="topicAnswers" class="approved-answers"></div>
+            <div id="hostTopicActions" hidden><button id="skipBtn" class="inline-link" type="button">🔀 Cambia argomento</button></div>
+          </section>
+          <section class="card hand-card">
+            <div class="section-title"><div><span class="eyebrow">TOCCA A TE!</span><h2>Le tue carte 🃏</h2></div><span id="cardsRemaining" class="chip chip-pink">5 rimaste</span></div>
+            <p id="playInstruction" class="helper">Scegli una carta, poi scrivi una risposta che inizi con quella lettera.</p>
+            <div id="hand" class="hand" role="group" aria-label="Le tue carte-lettera"></div>
+            <label id="answerLabel" for="answerInput">LA TUA RISPOSTA</label>
+            <input id="answerInput" maxlength="70" type="text" autocomplete="off" placeholder="Es. Mascara" enterkeyhint="send">
+            <p id="voiceTip" class="helper" hidden>Di' la risposta ad alta voce prima di scartare. Il testo è facoltativo, la host confermerà quello che hai detto.</p>
+            <button id="playBtn" class="btn btn-primary btn-wide" type="button">⚡ Gioca questa carta</button>
+            <p class="tiny center">La prima proposta viene verificata, poi si può continuare.</p>
+          </section>
+          <section class="card" id="audioCard" hidden>
+            <div class="section-title"><div><span class="eyebrow">MODALITÀ VOCE</span><h2>Parliamo insieme 🎧</h2></div><span id="audioBadge" class="chip chip-purple">Audio spento</span></div>
+            <p class="helper">Attiva il microfono per parlare direttamente nell'app. Se l'audio non funziona sulla vostra rete, potete usare una chiamata WhatsApp.</p>
+            <div class="audio-buttons"><button id="audioBtn" class="btn btn-outline" type="button">🎙️ Attiva audio</button><button id="muteBtn" class="btn btn-outline" type="button" hidden>🔇 Silenzia</button></div>
+            <div id="remoteAudio" aria-hidden="true"></div><p id="audioStatus" class="tiny">L'accesso al microfono richiede HTTPS e il permesso del telefono.</p>
+          </section>
+        </div>
+        <aside class="side-stack">
+          <section class="card"><div class="section-title"><div><span class="eyebrow">IN TEMPO REALE</span><h2>Le giocatrici 🏁</h2></div><span id="liveModeBadge" class="chip chip-purple">⌨️</span></div><div id="livePlayers" class="players-list"></div></section>
+          <section id="reviewCard" class="card review-card" hidden>
+            <span class="eyebrow">⏳ RISPOSTA IN VERIFICA</span><h2 id="pendingName">—</h2><div id="pendingAnswer" class="pending-answer">—</div><p id="pendingDetail" class="helper">La host sta controllando...</p>
+            <div id="reviewControls" class="review-controls" hidden><button id="rejectBtn" class="btn btn-reject" type="button">✕ Rifiuta</button><button id="acceptBtn" class="btn btn-accept" type="button">✓ Valida</button></div>
+          </section>
+          <section class="card"><span class="eyebrow">LA CLASSIFICA</span><h2>🏆 Punteggi</h2><div id="gameLeaderboard" class="leaderboard"></div></section>
+        </aside>
+      </div>
+
+      <div id="resultsArea" class="two-columns" hidden>
+        <section class="card results-card"><span class="eyebrow">MANCHE COMPLETATA</span><div class="trophy">🏆</div><h1 id="winnerText">Che manche!</h1><p>+5 punti bonus alla vincitrice, +1 per ogni carta scartata.</p><div id="roundResults" class="results-list"></div><div id="hostResults" hidden><button id="againBtn" class="btn btn-primary btn-wide" type="button">🎲 Un'altra manche!</button><div class="results-actions"><button id="modeWrittenResults" class="option-btn" type="button">⌨️ Scritto</button><button id="modeVoiceResults" class="option-btn" type="button">🎤 A voce</button></div><p class="tiny">Puoi cambiare modalità prima di iniziare.</p></div><p id="guestResults" class="soft-note" hidden>La host può avviare un'altra manche.</p></section>
+        <aside class="side-stack"><section class="card"><span class="eyebrow">CLASSIFICA GENERALE</span><h2>Le regine della serata 👑</h2><div id="finalLeaderboard" class="leaderboard"></div></section></aside>
+      </div>
+    </section>
+  </main>
+  <footer><strong>quickgirls ⚡</strong> · Un gioco originale di parole e carte per le tue amiche. Non è un prodotto ufficiale né affiliato agli editori di Quickstop.</footer>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="helpDialog" class="help-dialog"><div class="dialog-header"><h2>Come si gioca? 🎀</h2><button id="closeHelp" class="icon-btn" type="button" aria-label="Chiudi">✕</button></div><p>Una host crea una stanza e invita 2–5 amiche. Ognuna riceve cinque lettere diverse, segrete.</p><p>Un argomento appare per tutte. In <strong>modalità scritta</strong> scegli una carta e digiti una parola che inizi con quella lettera. In <strong>modalità voce</strong> pronunci la parola e tocchi la carta; puoi attivare l'audio dell'app oppure restare in una chiamata separata.</p><p>La <strong>host</strong> convalida ogni risposta. Quando sono state approvate <strong>3 risposte</strong> appare un nuovo argomento. Vince la manche chi scarta tutte le carte. Ogni carta scartata vale <strong>1 punto</strong>, più <strong>5 punti bonus</strong> a chi vince.</p><p>Le giocatrici possono ricollegarsi con lo stesso dispositivo. La host può espellere partecipanti dalla lobby, aggiungere temi personalizzati e passare il ruolo a un'altra persona.</p><button id="okayHelp" class="btn btn-primary btn-wide" type="button">Tutto chiaro, si gioca! ⚡</button></dialog>
+</body>
+</html>
